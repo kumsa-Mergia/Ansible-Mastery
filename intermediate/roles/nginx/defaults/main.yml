@@ -1,4 +1,5 @@
 ---
+
 nginx_port: 80
 nginx_user: www-data
 nginx_root: /var/www/html
