@@ -1,0 +1,21 @@
+---
+---
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+  tags: install
+
+- name: Ensure Nginx service is enabled and started
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  tags: service
+
+- name: Deploy Nginx configuration
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_conf_path }}"
+  notify: Restart Nginx
+  tags: config
