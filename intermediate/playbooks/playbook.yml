@@ -1,4 +1,5 @@
 ---
+
 - name: Deploy Nginx
   hosts: all
   become: yes
