@@ -1,7 +1,6 @@
 # Ansible Role Directory Structure
 
 =======================================================
-
 When you run the command:
 
 ```sh
