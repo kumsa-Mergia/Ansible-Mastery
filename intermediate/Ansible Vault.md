@@ -13,14 +13,12 @@ To encrypt a file using Ansible Vault, use the following command:
 ```bash
 ansible-vault encrypt <filename>
 ```
-
 ## Decrypting a File:
 To decrypt a file, use the following command:
 
 ```bash
 ansible-vault decrypt <filename>
 ```
-
 ## Using Encrypted Files in Playbooks:
 You can use encrypted files in your playbooks by specifying the --ask-vault-pass or --vault-password-file option when running Ansible.
 
