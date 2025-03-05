@@ -7,8 +7,8 @@ This file tracks my journey from intermediate to advanced Ansible skills. Each s
 
 ## ✅ **Intermediate Level**
 
-- [ ] Convert playbooks into **roles**
-- [ ] Implement **Jinja2 templates** for dynamic configurations
+- [ ✅ ] Convert playbooks into **roles**
+- [ ✅ ] Implement **Jinja2 templates** for dynamic configurations
 - [ ] Use **handlers, conditionals, and loops** effectively
 - [ ] Secure playbooks using **Ansible Vault**
 - [ ] Manage **dynamic inventory** from cloud providers
