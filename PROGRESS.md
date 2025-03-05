@@ -41,12 +41,6 @@ This file tracks my journey from intermediate to advanced Ansible skills. Each s
 
 ---
 
-## 📈 **Weekly Progress Updates**
-
-| Date        | Task Completed | Notes |
-|------------|---------------|-------|
-| YYYY-MM-DD | Example Task  | Example notes on learning |
-| YYYY-MM-DD | ...           | ...   |
 
 ---
 
