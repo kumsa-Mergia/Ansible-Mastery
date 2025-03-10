@@ -1,0 +1,47 @@
+---
+- name: Configure /etc/login.defs
+  hosts: 192.168.241.154
+  become: true
+
+  vars:
+    pass_max_days: 90
+    pass_min_days: 1
+    pass_warn_age: 7
+    login_retries: 3
+    login_timeout: 60
+
+  tasks:
+    - name: Set PASS_MAX_DAYS # Set maximum password age
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_MAX_DAYS'
+        line: "PASS_MAX_DAYS {{ pass_max_days }}"
+        state: present
+
+    - name: Set PASS_MIN_DAYS # Set minimum days between password changes
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_MIN_DAYS'
+        line: "PASS_MIN_DAYS {{ pass_min_days }}"
+        state: present
+
+    - name: Set PASS_WARN_AGE # Set password expiration warning age
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_WARN_AGE'
+        line: "PASS_WARN_AGE {{ pass_warn_age }}"
+        state: present
+
+    - name: Set LOGIN_RETRIES # Set maximum login retries
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^LOGIN_RETRIES'
+        line: "LOGIN_RETRIES {{ login_retries }}"
+        state: present
+
+    - name: Set LOGIN_TIMEOUT # Set login timeout
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^LOGIN_TIMEOUT'
+        line: "LOGIN_TIMEOUT {{ login_timeout }}"
+        state: present
