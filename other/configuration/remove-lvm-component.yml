@@ -1,0 +1,48 @@
+---
+- name: Remove LVM Components
+  hosts: ubuntu_server # Replace with your target hosts
+  become: true
+  vars:
+    volume_group: datavg # Replace with your VG name
+    logical_volume: datalv # Replace with your LV name
+    mount_point: /data # Replace with your mount point
+    physical_volume: /dev/sdb1 # Replace with your PV
+
+  tasks:
+    - name: Unmount Logical Volume
+      mount:
+        path: "{{ mount_point }}"
+        state: absent
+      ignore_errors: true # In case it's already unmounted
+
+    - name: Remove mount point directory
+      file:
+        path: "{{ mount_point }}"
+        state: absent
+
+    - name: Deactivate Logical Volume
+      lvg:
+        vg: "{{ volume_group }}"
+        lv: "{{ logical_volume }}"
+        state: absent
+      ignore_errors: true # In case it's already removed
+
+    - name: Remove Logical Volume
+      lvg:
+        vg: "{{ volume_group }}"
+        lv: "{{ logical_volume }}"
+        state: absent
+      ignore_errors: true
+
+    - name: Deactivate Volume Group
+      vg: "{{ volume_group }}"
+      state: absent
+
+    - name: Remove Volume Group
+      vg: "{{ volume_group }}"
+      state: absent
+
+    - name: Remove Physical Volume
+      pv:
+        path: "{{ physical_volume }}"
+        state: absent

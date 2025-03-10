@@ -1,0 +1,37 @@
+---
+- name: Partition /dev/sdb for LVM on Ubuntu Servers
+  hosts: ubuntu_server
+  become: true
+  vars:
+    disk: /dev/sdb
+    partition_type: "lvm"
+    partition_number: 1
+
+  tasks:
+    - name: Check if partition exists
+      command: "parted -s {{ disk }} print | grep '{{ partition_number }}'"
+      register: partition_exists
+      ignore_errors: true
+
+    - name: Create partition using parted
+      parted:
+        device: "{{ disk }}"
+        number: "{{ partition_number }}"
+        state: present
+        part_type: primary
+      when: partition_exists.rc != 0
+
+    - name: Set partition type to LVM
+      parted:
+        device: "{{ disk }}"
+        number: "{{ partition_number }}"
+        state: present
+        flags: [ lvm ]
+
+    - name: Partprobe to update kernel partition table
+      command: partprobe "{{ disk }}"
+
+    - name: Create Physical Volume (PV)
+      command: pvcreate "{{ disk }}{{ partition_number }}"
+      register: pv_create_result
+      failed_when: pv_create_result.rc != 0
