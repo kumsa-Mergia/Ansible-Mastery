@@ -1,0 +1,34 @@
+---
+- name: Configure /etc/security/pwquality.conf
+  hosts: 192.168.241.154
+  become: true
+
+  vars:
+    pwquality_config:
+      minlen: 10
+      minclass: 3
+      maxrepeat: 2
+      maxclassrepeat: 4
+      lcredit: -1
+      ucredit: -1
+      dcredit: -1
+      ocredit: -1
+      maxsequence: 2
+      difok: 5
+
+  tasks:
+    - name: Ensure /etc/security/pwquality.conf exists
+      file:
+        path: /etc/security/pwquality.conf
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Configure pwquality.conf settings
+      lineinfile:
+        path: /etc/security/pwquality.conf
+        regexp: "^{{ item.key }}"
+        line: "{{ item.key }} = {{ item.value }}"
+        state: present
+      loop: "{{ pwquality_config | dict2items }}"
