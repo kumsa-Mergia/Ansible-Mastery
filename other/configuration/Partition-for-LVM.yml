@@ -30,8 +30,3 @@
 
     - name: Partprobe to update kernel partition table
       command: partprobe "{{ disk }}"
-
-    - name: Create Physical Volume (PV)
-      command: pvcreate "{{ disk }}{{ partition_number }}"
-      register: pv_create_result
-      failed_when: pv_create_result.rc != 0
