@@ -1,0 +1,33 @@
+---
+- name: Install libpam-pwquality
+  hosts: 192.168.241.154
+  become: true
+
+  tasks:
+    - name: Update apt cache (Debian/Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Update yum cache (RedHat/CentOS/Fedora)
+      yum:
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Install libpam-pwquality (Debian/Ubuntu)
+      apt:
+        name: libpam-pwquality
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install libpam-pwquality (RedHat/CentOS/Fedora)
+      yum:
+        name: libpwquality
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install libpam-pwquality (openSUSE)
+      zypper:
+        name: libpwquality
+        state: present
+      when: ansible_os_family == "Suse"
